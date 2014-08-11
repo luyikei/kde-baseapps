@@ -16,20 +16,20 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef pi_h
-#define pi_h
+#ifndef genhash_h
+#define genhash_h
 
 #include <kparts/plugin.h>
 
-class Pi : public KParts::Plugin
+class GenHash : public KParts::Plugin
 {
     Q_OBJECT
 public:
-    Pi( QObject* parent, const QVariantList & );
-    ~Pi() {}
+    GenHash( QObject* parent, const QVariantList & );
+    ~GenHash() {}
 
 public slots:
-    void calcPi();
+    void calcGenHash();
 };
 
 #endif

@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "pi.h"
+#include "genhash.h"
 #include <kparts/part.h>
 #include <kicon.h>
 #include <kactioncollection.h>
@@ -29,39 +29,34 @@
 #include <kauthorized.h>
 #include <kio/netaccess.h>
 #include <kparts/fileinfoextension.h>
+#include <QCryptographicHash>
 
-Pi::Pi( QObject* parent, const QVariantList & )
+GenHash::GenHash( QObject* parent, const QVariantList & )
     : KParts::Plugin( parent )
 {
 
-    KAction *action = actionCollection()->addAction("calculatepi");
-    action->setText(i18n( "&Calculate Pi..." ));
-    connect(action, SIGNAL(triggered(bool)), SLOT(calcPi()));
+    KAction *action = actionCollection()->addAction("generatehash");
+    action->setText(i18n( "&Generate MD5 Hash..." ));
+    connect(action, SIGNAL(triggered(bool)), SLOT(calcGenHash()));
 }
 
-void Pi::calcPi()
+void GenHash::calcGenHash()
 {
     KParts::ReadOnlyPart * part = qobject_cast<KParts::ReadOnlyPart *>(parent());
-    int count=0;
-    const int total = 100000;
-    qreal pi=0;
 
-    for (int i=0; i<total; i++) {
-        qreal x = (qreal)qrand() / (RAND_MAX);
-        qreal y = (qreal)qrand() / (RAND_MAX);
-
-        if (x*x+y*y <= 1) {
-            count++;
-        }
+    bool ok;
+    QString baseString = KInputDialog::getText(i18nc("@title:window", "Generate MD5 Hash"),
+                                        i18n("Please enter a text to generate MD5 hash."),
+                                        "", &ok, part->widget());
+    if (ok) {
+        KMessageBox::information(part->widget(),i18n("Md5 : %1").arg(
+                                     QString(QCryptographicHash::hash(baseString.toAscii(), QCryptographicHash::Md5).toHex())));
     }
 
-    pi = (qreal)count / (qreal)total * 4.0;
-
-    KMessageBox::information(part->widget(),i18n("%1").arg(pi));
 }
 
-K_PLUGIN_FACTORY(KonqPiFactory, registerPlugin<Pi>();)
-K_EXPORT_PLUGIN(KonqPiFactory("pi"))
+K_PLUGIN_FACTORY(KonqGenHashFactory, registerPlugin<GenHash>();)
+K_EXPORT_PLUGIN(KonqGenHashFactory("genhash"))
 
-#include "pi.moc"
+#include "genhash.moc"
 
