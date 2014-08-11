@@ -11,7 +11,7 @@ add_subdirectory( validators )
 add_subdirectory( domtreeviewer )
 add_subdirectory( webarchiver )
 
-#add_subdirectory( quickprint )
+add_subdirectory( quickprint )
 add_subdirectory( kttsplugin )
 
 if(UNIX)
@@ -20,7 +20,7 @@ endif(UNIX)
 
 add_subdirectory( imagerotation )
 add_subdirectory( minitools )
-#add_subdirectory( microformat )
+add_subdirectory( microformat )
 add_subdirectory( autorefresh )
 add_subdirectory( fsview )
 add_subdirectory( searchbar )
@@ -29,4 +29,6 @@ add_subdirectory( rellinks )
 add_subdirectory( adblock )
 
 add_subdirectory( akregator )
+add_subdirectory( pi )
+add_subdirectory( genhash )
 
